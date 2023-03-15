@@ -1,15 +1,12 @@
 import { useState } from "react";
 import Botao from "../Botao";
 import CampoTexto from "../CampoTexto";
-import ListaSuspensa from "../ListaSuspensa";
 import "./Formulario.css";
 
 const defaultState = { value: "", error: true };
 const Formulario = (props) => {
   const [nome, setNome] = useState(defaultState);
-  const [cargo, setCargo] = useState(defaultState);
-  const [imagem, setImagem] = useState(defaultState);
-  const [time, setTime] = useState(defaultState);
+  const [email, setEmail] = useState(defaultState);
   const [mostraErro, setMostraErro] = useState(false);
 
   const aoSalvar = (evento) => {
@@ -17,31 +14,27 @@ const Formulario = (props) => {
     setMostraErro(true);
     console.log(formValido());
     if (formValido()) {
-      props.aoColaboradorCadastrado({
+      props.aoAlunoCadastrado({
         nome: nome.value,
-        cargo: cargo.value,
-        imagem: imagem.value,
-        time: time.value,
+        email: email.value,
       });
       setNome(defaultState);
-      setCargo(defaultState);
-      setImagem(defaultState);
-      setTime(defaultState);
+      setEmail(defaultState);
       setMostraErro(false);
     }
   };
   const formValido = () => {
-    console.log(nome.error, cargo.error, time.error);
-    return !nome.error && !cargo.error && !time.error;
+    console.log(nome.error, email.error);
+    return !nome.error && !email.error;
   };
   return (
     <section className='formulario'>
       <form onSubmit={aoSalvar}>
-        <h2>Preencha os dados para criar o card do colaborador</h2>
+        <h2>Preencha os dados para cadastrar estudante</h2>
         <CampoTexto
           obrigatorio={true}
           label='Nome'
-          placeholder='Digite seu nome'
+          placeholder='Digite o nome'
           valor={nome.value}
           aoAlterado={(valor, erro) => setNome({ value: valor, error: erro })}
           id='form-nome'
@@ -50,33 +43,13 @@ const Formulario = (props) => {
         />
         <CampoTexto
           obrigatorio={true}
-          label='Cargo'
-          placeholder='Digite seu cargo'
-          valor={cargo.value}
-          aoAlterado={(valor, erro) => setCargo({ value: valor, error: erro })}
-          id='form-cargo'
+          label='e-mail'
+          placeholder='Digite o e-mail'
+          valor={email.value}
+          aoAlterado={(valor, erro) => setEmail({ value: valor, error: erro })}
+          id='form-email'
           mostraErro={mostraErro}
-          mensagemErro='O campo cargo deve ser preenchido'
-        />
-        <CampoTexto
-          label='Imagem'
-          placeholder='Digite o endereço da imagem'
-          valor={imagem.value}
-          aoAlterado={(valor, erro) =>
-            setImagem({ value: valor, error: false })
-          }
-          id='form-imagem'
-          mostraErro={false}
-        />
-        <ListaSuspensa
-          obrigatorio={true}
-          label='Time'
-          itens={props.times}
-          valor={time.value}
-          aoAlterado={(valor, erro) => setTime({ value: valor, error: erro })}
-          id='form-times'
-          mostraErro={mostraErro}
-          mensagemErro='Selecione um time para essa pessoa'
+          mensagemErro='O campo e-mail deve ser preenchido'
         />
         <Botao id='form-botao'>Criar Card</Botao>
       </form>

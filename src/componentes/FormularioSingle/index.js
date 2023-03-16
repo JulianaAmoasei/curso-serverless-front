@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Botao from "../Botao";
 import CampoTexto from "../CampoTexto";
-import "./Formulario.css";
+import "./FormularioSingle.css";
 
 const defaultState = { value: "", error: true };
-const Formulario = (props) => {
+
+const FormularioSingle = (props) => {
   const [nome, setNome] = useState(defaultState);
   const [email, setEmail] = useState(defaultState);
   const [mostraErro, setMostraErro] = useState(false);
@@ -12,7 +13,6 @@ const Formulario = (props) => {
   const aoSalvar = (evento) => {
     evento.preventDefault();
     setMostraErro(true);
-    console.log(formValido());
     if (formValido()) {
       props.aoAlunoCadastrado({
         nome: nome.value,
@@ -23,10 +23,12 @@ const Formulario = (props) => {
       setMostraErro(false);
     }
   };
+
   const formValido = () => {
     console.log(nome.error, email.error);
     return !nome.error && !email.error;
   };
+
   return (
     <section className='formulario'>
       <form onSubmit={aoSalvar}>
@@ -51,10 +53,10 @@ const Formulario = (props) => {
           mostraErro={mostraErro}
           mensagemErro='O campo e-mail deve ser preenchido'
         />
-        <Botao id='form-botao'>Criar Card</Botao>
+        <Botao id='form-botao'>Criar registro de estudante</Botao>
       </form>
     </section>
   );
 };
 
-export default Formulario;
+export default FormularioSingle;

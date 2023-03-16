@@ -1,22 +1,25 @@
 import { useState } from "react";
-import Formulario from "./componentes/Formulario";
+import FormularioSingle from "./componentes/FormularioSingle";
+import FormularioBatch from "./componentes/FormularioBatch";
+import { criaRegistro } from "./servicos/api-connect";
 
 function App() {
-
   const [alunos, setAlunos] = useState([]);
 
-  const aoNovoAlunoAdicionado = (aluno) => {
+  const aoNovoAlunoAdicionado = async (aluno) => {
     setAlunos([...alunos, aluno]);
-    console.log('alunos', alunos);
+    const res = await criaRegistro(aluno);
+    console.log(res);
   };
 
+  const aoNovoCadastroEmBatch = async (arquivo) => {
+    console.log('entrou', arquivo);
+  }
+
   return (
-    <div className='App'>
-      <Formulario
-        aoAlunoCadastrado={(aluno) =>
-          aoNovoAlunoAdicionado(aluno)
-        }
-      />
+    <div className="App">
+      <FormularioSingle aoAlunoCadastrado={(aluno) => aoNovoAlunoAdicionado(aluno)} />
+      <FormularioBatch aoCadastroEmBatch={(arquivo) => aoNovoCadastroEmBatch(arquivo)} />
     </div>
   );
 }

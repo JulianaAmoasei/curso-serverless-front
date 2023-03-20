@@ -1,30 +1,38 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Botao from "../Botao";
 import CampoArquivo from "../CampoArquivo";
-import { enviaArquivo } from "../../servicos/api-connect";
+import { geraPresignURL, enviaArquivoViaURL } from "../../servicos/api-connect";
 import "./FormularioBatch.css";
 
 const FormularioBatch = (props) => {
+  const [ arquivoSelecionado, setArquivoSelecionado ] = useState(null)
+  const [ resOperacaoBatch, setResOperacaoBatch ] = useState('')
+  const ref = useRef(null);
 
-  const [arquivo, setArquivo] = useState(null)
-
-  const aoSalvar = (evento) => {
+  const submitHandler = async (evento) => {
     evento.preventDefault();
-    enviaArquivo(arquivo)
+    const urlPreassinada = await geraPresignURL(ref.current.files[0].name);
+    const res = await enviaArquivoViaURL(urlPreassinada, arquivoSelecionado)
+    setResOperacaoBatch(res);
   };
-  
+
   return (
-    <section className='formulario'>
-      <form onSubmit={aoSalvar}>
+    <section className="formulario">
+      <form
+        onSubmit={submitHandler}
+      >
         <h2>Selecione um arquivo para fazer o cadastro em lote</h2>
         <CampoArquivo
           obrigatorio={true}
-          label='Selecione apenas arquivos do tipo CSV'
-          type='file'
-          id='form-arquivo'
-          arquivoSelecionado={(caminhoArquivo) => setArquivo({ value: caminhoArquivo })}
+          ref={ref}
+          label="Selecione apenas arquivos do tipo CSV"
+          type="file"
+          id="form-arquivo"
+          accept=".csv"
+          onChange={e => setArquivoSelecionado(e.target.files[0])}
+          msgResultadoBatch={resOperacaoBatch}
         />
-        <Botao id='form-botao'>Criar registros em lote</Botao>
+        <Botao id="form-botao">Criar registros em lote</Botao>
       </form>
     </section>
   );

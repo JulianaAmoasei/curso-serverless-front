@@ -9,7 +9,7 @@ function App() {
   const aoNovoAlunoAdicionado = async (aluno) => {
     setAlunos([...alunos, aluno]);
     const res = await criaRegistro(aluno);
-    console.log(res);
+    return res;
   };
 
   const aoNovoCadastroEmBatch = async (arquivo) => {

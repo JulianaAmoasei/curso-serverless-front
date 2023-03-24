@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FormularioSingle from "./componentes/FormularioSingle";
-import FormularioBatch from "./componentes/FormularioBatch";
 import { criaRegistro } from "./servicos/api-connect";
 
 function App() {
@@ -12,14 +11,9 @@ function App() {
     return res;
   };
 
-  const aoNovoCadastroEmBatch = async (arquivo) => {
-    console.log('entrou', arquivo);
-  }
-
   return (
     <div className="App">
       <FormularioSingle aoAlunoCadastrado={(aluno) => aoNovoAlunoAdicionado(aluno)} />
-      <FormularioBatch aoCadastroEmBatch={(arquivo) => aoNovoCadastroEmBatch(arquivo)} />
     </div>
   );
 }

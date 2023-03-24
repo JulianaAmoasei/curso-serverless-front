@@ -1,5 +1,5 @@
 import geraUrlPreassinada from "./s3-generateURL";
-const BASE_URL = "http://ecs-django-186565849.us-east-1.elb.amazonaws.com";
+const BASE_URL = "http://curso-serverless2-api-785671386.us-east-1.elb.amazonaws.com";
 
 function buildFetchObj(metodo, contentType, body) {
   return ({
@@ -18,8 +18,6 @@ async function criaRegistro(novoRegistro) {
   const fetchObj = buildFetchObj("POST", "application/json", JSON.stringify(novoRegistro))
   try {
     const res = await fetch(`${BASE_URL}/alunos`, fetchObj);
-    const x = await res.json();
-    console.log(x);
     return res.json();
   } catch (erro) {
     return erro;

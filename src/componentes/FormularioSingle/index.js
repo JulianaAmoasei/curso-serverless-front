@@ -7,7 +7,7 @@ const defaultState = { value: "", error: true };
 
 const FormularioSingle = (props) => {
   const [nome, setNome] = useState(defaultState);
-  const [matricula, setMatricula] = useState(defaultState);
+  const [email, setEmail] = useState(defaultState);
   const [mostraErro, setMostraErro] = useState(false);
 
   const aoSalvar = (evento) => {
@@ -16,17 +16,17 @@ const FormularioSingle = (props) => {
     if (formValido()) {
       props.aoAlunoCadastrado({
         nome: nome.value,
-        matricula: matricula.value,
+        email: email.value,
       });
       setNome(defaultState);
-      setMatricula(defaultState);
+      setEmail(defaultState);
       setMostraErro(false);
     }
   };
 
   const formValido = () => {
-    console.log(nome.error, matricula.error);
-    return !nome.error && !matricula.error;
+    console.log(nome.error, email.error);
+    return !nome.error && !email.error;
   };
 
   return (
@@ -45,13 +45,13 @@ const FormularioSingle = (props) => {
         />
         <CampoTexto
           obrigatorio={true}
-          label='matricula'
-          placeholder='Digite a matricula'
-          valor={matricula.value}
-          aoAlterado={(valor, erro) => setMatricula({ value: valor, error: erro })}
+          label='email'
+          placeholder='Digite o email'
+          valor={email.value}
+          aoAlterado={(valor, erro) => setEmail({ value: valor, error: erro })}
           id='form-email'
           mostraErro={mostraErro}
-          mensagemErro='O campo matrícula deve ser preenchido'
+          mensagemErro='O campo e-mail deve ser preenchido'
         />
         <Botao id='form-botao'>Criar registro de estudante</Botao>
       </form>
